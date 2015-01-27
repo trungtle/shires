@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using DG.Tweening;
 
+public class BitZone
+{
+    public int redLord, redRook, redRookExtra, redWhisperer;
+    public int blueLord, blueRook, blueRookExtra, blueWhisperer;
+
+    public BitZone ()
+    {
+
+    }
+}
+
 public class Zone :MonoBehaviour
 {
     public GameObject[] tileObjs;
@@ -11,10 +22,11 @@ public class Zone :MonoBehaviour
     // Store unit locations in tiles
     Tile[,] tiles;
     Board board;
+    Game game;
     Unit hoverUnit;
     Player player;
     Flag flag;
-   
+
     public Tile[,] Tiles {
         get {
             return tiles;
@@ -39,10 +51,17 @@ public class Zone :MonoBehaviour
         }
     }
 
+    public int TilesNum {
+        get {
+            return columns * rows;
+        }
+    }
+
     void Awake ()
     {
         tiles = new Tile[rows, columns];
         board = GetComponentInParent<Board> ();
+        game = GetComponentInParent<Game> ();
 
         for (int i = 0; i < tileObjs.Length; ++i) {
 
@@ -76,11 +95,6 @@ public class Zone :MonoBehaviour
     float TileSize ()
     {
         return tileObjs [0].renderer.bounds.size.x;
-    }
-
-    GameObject TileFromColumnRow (int column, int row)
-    {
-        return tileObjs [row * columns + column];
     }
 
     public Unit HoverUnit {
@@ -223,13 +237,15 @@ public class Zone :MonoBehaviour
 
     bool AttachUnitToTile (Unit unit, int column, int row, bool isLandmark = false)
     {
+        Tile tile = tiles [column, row];
+
         // Prevent moving to a tile that is occupied, unless the unit is a rook
-        if (tiles [column, row].Occupied () && unit.CanDestroyUnit () == false) {
+        if (tile.Occupied () && unit.CanDestroyUnit () == false) {
             return false;
         }
         
         if (unit.Zone) {
-            // Delete old location
+            // Delete old location in the previous zone
             unit.Zone.Tiles [unit.Column, unit.Row].DetachUnit (); 
         }
         
@@ -238,8 +254,7 @@ public class Zone :MonoBehaviour
         unit.Zone = this;
 
         // Add unit to tile
-        tiles [column, row].AttachUnit (unit, isLandmark);
-
+        tile.AttachUnit (unit, isLandmark);
         return true;
     }
 
@@ -248,4 +263,47 @@ public class Zone :MonoBehaviour
         return tag;
     }
 
+    public int IndexFromColumnRow (int column, int row)
+    {
+        return columns * row + column;
+    }        
+
+    public int RowFromIndex (int index)
+    {
+        return index / columns;
+    }
+
+    public int ColumnFromIndex (int index)
+    {
+        return index % columns;
+    }
+
+    public static bool IsIndexSet (int zoneIndexes, int index)
+    {
+        return (zoneIndexes & 0x1 << index) != 0;
+    }
+
+    public static int SetIndex (int zoneIndexes, int index)
+    {
+        zoneIndexes |= 0x1 << index;
+        return zoneIndexes;
+    }
+
+    // Bitboard representation
+    public BitZone BitZone ()
+    {
+        BitZone bz = new BitZone ();
+
+        Zone.SetIndex (bz.redLord, game.RedPlayer.Lord.Tile.Index);
+        Zone.SetIndex (bz.redWhisperer, game.RedPlayer.Whisperer.Tile.Index);
+        Zone.SetIndex (bz.redRook, game.RedPlayer.Rook.Tile.Index);
+        Zone.SetIndex (bz.redRookExtra, game.RedPlayer.ExtraRook.Tile.Index);
+        
+        Zone.SetIndex (bz.blueLord, game.BluePlayer.Lord.Tile.Index);
+        Zone.SetIndex (bz.blueWhisperer, game.BluePlayer.Whisperer.Tile.Index);
+        Zone.SetIndex (bz.blueRook, game.BluePlayer.Rook.Tile.Index);
+        Zone.SetIndex (bz.blueRookExtra, game.BluePlayer.ExtraRook.Tile.Index);
+
+        return bz;
+    }
 }

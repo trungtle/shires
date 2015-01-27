@@ -27,6 +27,21 @@ public class Player
         }
     }
 
+    public Unit Rook {
+        get {
+            foreach (Unit u in units) {
+                if (u.tag == Unit.RED_ROOK || u.tag == Unit.BLUE_ROOK) {
+                    if (u == extraRook) {
+                        // Skip the extra rook
+                        continue;
+                    }
+                    return u;
+                }
+            }
+            return null;
+        }
+    }
+
     // We can have more than 1 rook
     public Unit ExtraRook {
         get {

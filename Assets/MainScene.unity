@@ -8942,10 +8942,6 @@ MonoBehaviour:
   valleyZoneObj: {fileID: 1830587434}
   hillZoneObj: {fileID: 2048500900}
   riverZoneObj: {fileID: 1018816139}
-  redLordObj: {fileID: 0}
-  redWhispererObj: {fileID: 0}
-  blueLordObj: {fileID: 0}
-  blueWhispererObj: {fileID: 0}
 --- !u!114 &1091966881
 MonoBehaviour:
   m_ObjectHideFlags: 0

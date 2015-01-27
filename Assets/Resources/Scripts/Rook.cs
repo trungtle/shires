@@ -25,8 +25,25 @@ public class Rook : MonoBehaviour
     {
         // Rook moves like in chess
         // Can destroy walls and units
-        rook.Zone.HighlightTile (rook.Column, rook.Row);
+
+        Zone zone = rook.Zone;
+        zone.HighlightTile (rook.Column, rook.Row);
         
+        int moves = RookMoves (rook);   
+        int tilesNum = zone.TilesNum;
+        for (int bit = 0; bit < tilesNum; bit++) {
+            if ((moves & (0x1 << bit)) != 0) {
+                int c = zone.ColumnFromIndex (bit);
+                int r = zone.RowFromIndex (bit);
+                zone.HighlightTile (c, r);
+            }
+        }
+    }
+
+    public static int RookMoves (Unit rook)
+    {
+        int moves = 0x0;
+
         // All valid tiles radiate from the unit's location,
         // so we just need to find the valid rows and columns (not blocked or occupied)
         
@@ -38,14 +55,14 @@ public class Rook : MonoBehaviour
             if (tile.Unit && tile.Unit.Player != rook.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                rook.Zone.HighlightTile (finalColumn, rook.Row);
+                moves = Zone.SetIndex (moves, tile.Index);
+
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-            
-            rook.Zone.HighlightTile (finalColumn, rook.Row);
-            
+            moves = Zone.SetIndex (moves, tile.Index);
+
         }
         
         // right
@@ -56,13 +73,15 @@ public class Rook : MonoBehaviour
             if (tile.Unit && tile.Unit.Player != rook.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                rook.Zone.HighlightTile (finalColumn, rook.Row);
+                moves = Zone.SetIndex (moves, tile.Index);
+
                 break;
             } else if (tile.Occupied ()) {
                 break;
             } 
-            rook.Zone.HighlightTile (finalColumn, rook.Row);
-            
+            moves = Zone.SetIndex (moves, tile.Index);
+
+
         }
         
         // up 
@@ -73,12 +92,14 @@ public class Rook : MonoBehaviour
             if (tile.Unit && tile.Unit.Player != rook.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                rook.Zone.HighlightTile (rook.Column, finalRow);
+                moves = Zone.SetIndex (moves, tile.Index);
+
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-            rook.Zone.HighlightTile (rook.Column, finalRow);
+            moves = Zone.SetIndex (moves, tile.Index);
+
         }        
         
         // down
@@ -89,14 +110,19 @@ public class Rook : MonoBehaviour
             if (tile.Unit && tile.Unit.Player != rook.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                rook.Zone.HighlightTile (rook.Column, finalRow);
+                moves = Zone.SetIndex (moves, tile.Index);
+
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-            rook.Zone.HighlightTile (rook.Column, finalRow);               
-        }        
+            moves = Zone.SetIndex (moves, tile.Index);
+
+        }  
+
+        return moves;
     }
+    
 
     public static string Description ()
     {

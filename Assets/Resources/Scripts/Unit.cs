@@ -22,7 +22,6 @@ public class Unit : MonoBehaviour
     int extraSpeed = 0;
 
     Zone zone;
-    Board board;
     Player player;
     PlayableUnit playableUnit;
     Tile spawnTile;
@@ -115,7 +114,6 @@ public class Unit : MonoBehaviour
 
     void Start ()
     {
-        board = GetComponentInParent<Board> ();
         playableUnit = GetComponent<PlayableUnit> ();
     }
     

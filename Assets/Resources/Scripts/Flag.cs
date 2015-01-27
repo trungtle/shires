@@ -117,7 +117,7 @@ public class Flag : MonoBehaviour
     {
         switch (tag) {
         case VALLEY_FLAG:
-            return "Valley grants Lord moves from Whisperer";
+            return "Valley grants Lord moves from Knight";
         case RIVER_FLAG:
             return "River allows Lord to attack";
         case HILL_FLAG:

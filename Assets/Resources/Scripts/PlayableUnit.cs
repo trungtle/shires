@@ -178,19 +178,19 @@ public class PlayableUnit : MonoBehaviour
     public void OnCompleteMove ()
     {
         audio.clip = moveClip;
-//        audio.Play ();
+        audio.Play ();
     }
 
     public void OnTunneling ()
     {
         audio.clip = tunnelClip;
-//        audio.Play ();
+        audio.Play ();
     }
 
     public void OnCapturing ()
     {
         audio.clip = captureClip;
-//        audio.Play ();
+        audio.Play ();
     }
 
     public void OnRemovedFromGame (bool delayed = false)

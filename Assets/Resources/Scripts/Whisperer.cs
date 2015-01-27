@@ -21,14 +21,14 @@ public class Whisperer : MonoBehaviour
         game.HideHelpText ();
     }
 
-    public static void ShowWhispererMoves (Unit whisperer)
+    public static int WhispererMoves (Unit whisperer)
     {
+        int moves = 0x0;
         Zone zone = whisperer.Zone;
         
         // Whisperer must move exactly 3 squares but cannot land on walls. It can moves through obstacle.
         // Can only capture playable units
-        zone.HighlightTile (whisperer.Column, whisperer.Row);
-        
+
         int speed = 3;
         
         for (int step = 0; step <= speed; ++step) {
@@ -39,7 +39,7 @@ public class Whisperer : MonoBehaviour
             if (column < zone.columns && row < zone.rows && column >= 0 && row >= 0) {
                 Tile tile = zone.Tiles [column, row];
                 if (tile.Unit == null || (tile.Unit.Player != null && tile.Unit.Player != whisperer.Player && whisperer.CanDestroyUnit ())) {
-                    zone.HighlightTile (column, row);
+                    moves = Zone.SetIndex (moves, tile.Index);
                 }
             }
             
@@ -49,7 +49,7 @@ public class Whisperer : MonoBehaviour
             if (column < zone.columns && row < zone.rows && column >= 0 && row >= 0) {
                 Tile tile = zone.Tiles [column, row];
                 if (tile.Unit == null || (tile.Unit.Player != null && tile.Unit.Player != whisperer.Player && whisperer.CanDestroyUnit ())) {
-                    zone.HighlightTile (column, row);
+                    moves = Zone.SetIndex (moves, tile.Index);
                 }
             }
             
@@ -59,7 +59,7 @@ public class Whisperer : MonoBehaviour
             if (column < zone.columns && row < zone.rows && column >= 0 && row >= 0) {
                 Tile tile = zone.Tiles [column, row];
                 if (tile.Unit == null || (tile.Unit.Player != null && tile.Unit.Player != whisperer.Player && whisperer.CanDestroyUnit ())) {
-                    zone.HighlightTile (column, row);
+                    moves = Zone.SetIndex (moves, tile.Index);
                 }
             }
             
@@ -69,15 +69,29 @@ public class Whisperer : MonoBehaviour
             if (column < zone.columns && row < zone.rows && column >= 0 && row >= 0) {
                 Tile tile = zone.Tiles [column, row];
                 if (tile.Unit == null || (tile.Unit.Player != null && tile.Unit.Player != whisperer.Player && whisperer.CanDestroyUnit ())) {
-                    zone.HighlightTile (column, row);
+                    moves = Zone.SetIndex (moves, tile.Index);
                 }
             }
-        }        
+        }  
+        return moves;
+    }
+
+    public static void ShowWhispererMoves (Unit whisperer)
+    {
+        Zone zone = whisperer.Zone;
+        zone.HighlightTile (whisperer.Column, whisperer.Row);
+        int moves = WhispererMoves (whisperer);       
+        int tilesNum = zone.TilesNum;
+        for (int bit = 0; bit < tilesNum; bit++) {
+            if (Zone.IsIndexSet (moves, bit)) {
+                zone.HighlightTile (zone.ColumnFromIndex (bit), zone.RowFromIndex (bit));
+            }
+        }
     }
 
     public static string Description ()
     {
-        return "Whisperer moves exactly 3 tiles in any directions. Can attack.\n\nRespawn: " + PlayableUnit.REGEN_TURNS + " turns";
+        return "Knight moves exactly 3 tiles in any directions. Can attack.\n\nRespawn: " + PlayableUnit.REGEN_TURNS + " turns";
 
     }
 

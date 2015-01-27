@@ -9,6 +9,7 @@ public class Tile : MonoBehaviour
     Zone zone;
     int column;
     int row;
+    int index; // For bitboard position
 
     bool validForMove;
     Unit occupyingUnit;
@@ -34,6 +35,13 @@ public class Tile : MonoBehaviour
             return row;
         }
     }
+
+    public int Index {
+        get {
+            return index;
+        }
+    }
+
 
     void Awake ()
     {
@@ -109,6 +117,7 @@ public class Tile : MonoBehaviour
         this.zone = zone;
         this.column = column;
         this.row = row;
+        this.index = zone.columns * row + column;
     }
 
     public void SetCaptionTextColor (Color color)

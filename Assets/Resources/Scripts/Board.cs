@@ -3,10 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 
+public class BitBoard
+{
+    public bool isRedTurn;
+
+    // Bitboards
+    public List<BitZone> zones;
+    public List<BitBoard> possibleMoves;
+
+    public BitBoard ()
+    {
+        zones = new List<BitZone> ();
+        possibleMoves = new List<BitBoard> ();
+    }
+}
+
 public class Board : MonoBehaviour
 {
     public GameObject redZoneObj, blueZoneObj, valleyZoneObj, hillZoneObj, riverZoneObj;
-    public GameObject redLordObj, redWhispererObj, blueLordObj, blueWhispererObj;
 
     Zone redZone, blueZone, valleyZone, hillZone, riverZone;
     List<Unit> playableUnits;
@@ -233,5 +247,18 @@ public class Board : MonoBehaviour
         Unit rook = player.ExtraRook;
         playableUnits.Remove (rook);
         rook.RemoveFromGame (true);
+    }
+
+    public BitBoard BitBoard {                    
+        get {
+            BitBoard bitBoard = new BitBoard ();
+            bitBoard.zones.Add (redZone.BitZone ());
+            bitBoard.zones.Add (blueZone.BitZone ());
+            bitBoard.zones.Add (hillZone.BitZone ());
+            bitBoard.zones.Add (valleyZone.BitZone ());
+            bitBoard.zones.Add (riverZone.BitZone ());
+            bitBoard.isRedTurn = game.IsRedTurn;
+            return bitBoard;
+        }
     }
 }

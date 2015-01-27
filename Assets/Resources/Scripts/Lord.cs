@@ -28,11 +28,10 @@ public class Lord : MonoBehaviour
         game.HideHelpText ();
     }
 
-    public static void ShowLordMoves (Unit lord)
+    public static int LordMoves (Unit lord)
     {
-        // Lord moves up to 2 adjacent orthagonal squares
-        lord.Zone.HighlightTile (lord.Column, lord.Row);
-        
+        int moves = 0x0;
+
         // All valid tiles radiate from the unit's location,
         // so we just need to find the valid rows and columns
         
@@ -45,18 +44,18 @@ public class Lord : MonoBehaviour
             if (finalColumn < 0) {
                 break;
             }
-
+            
             Tile tile = lord.Zone.Tiles [finalColumn, lord.Row];
             if (lord.CanDestroyUnit () && tile.Unit && tile.Unit.Player != lord.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                lord.Zone.HighlightTile (finalColumn, lord.Row);
+                moves = Zone.SetIndex (moves, tile.Index);
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-
-            lord.Zone.HighlightTile (finalColumn, lord.Row);
+            
+            moves = Zone.SetIndex (moves, tile.Index);
         }
         
         // right
@@ -71,12 +70,12 @@ public class Lord : MonoBehaviour
             if (lord.CanDestroyUnit () && tile.Unit && tile.Unit.Player != lord.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                lord.Zone.HighlightTile (finalColumn, lord.Row);
+                moves = Zone.SetIndex (moves, tile.Index);
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-            lord.Zone.HighlightTile (finalColumn, lord.Row);
+            moves = Zone.SetIndex (moves, tile.Index);
             
         }
         
@@ -87,18 +86,18 @@ public class Lord : MonoBehaviour
             if (finalRow < 0) {
                 break;
             }
-
+            
             Tile tile = lord.Zone.Tiles [lord.Column, finalRow];
             if (lord.CanDestroyUnit () && tile.Unit && tile.Unit.Player != lord.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                lord.Zone.HighlightTile (lord.Column, finalRow);
+                moves = Zone.SetIndex (moves, tile.Index);
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-
-            lord.Zone.HighlightTile (lord.Column, finalRow);
+            
+            moves = Zone.SetIndex (moves, tile.Index);
             
         }
         
@@ -114,15 +113,33 @@ public class Lord : MonoBehaviour
             if (lord.CanDestroyUnit () && tile.Unit && tile.Unit.Player != lord.Player) {
                 
                 // Blocked, if it's a destructable unit, highlight then break
-                lord.Zone.HighlightTile (lord.Column, finalRow);
+                moves = Zone.SetIndex (moves, tile.Index);
                 break;
             } else if (tile.Occupied ()) {
                 break;
             }
-
-            lord.Zone.HighlightTile (lord.Column, finalRow);
+            
+            moves = Zone.SetIndex (moves, tile.Index);
             
         }
+
+        return moves;
+    }
+
+    public static void ShowLordMoves (Unit lord)
+    {
+        // Lord moves up to 2 adjacent orthagonal squares
+        lord.Zone.HighlightTile (lord.Column, lord.Row);
+
+        Zone zone = lord.Zone;
+        int moves = LordMoves (lord);
+        int tilesNum = zone.TilesNum;
+        for (int bit = 0; bit < tilesNum; bit++) {
+            if (Zone.IsIndexSet (moves, bit)) {
+                zone.HighlightTile (zone.ColumnFromIndex (bit), zone.RowFromIndex (bit));
+            }
+        }
+
     }
 
     public static string Description ()
