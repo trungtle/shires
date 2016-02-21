@@ -136,7 +136,7 @@ public class Flag : MonoBehaviour
     public static void CreateValleyFlag (Zone zone, int column, int row)
     {
         GameObject obj = Instantiate (Resources.Load ("Prefabs/ValleyFlag")) as GameObject;
-        obj.renderer.sortingLayerName = FLAG_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = FLAG_RENDER_LAYER;
         obj.tag = VALLEY_FLAG;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();
@@ -147,7 +147,7 @@ public class Flag : MonoBehaviour
     public static void CreateHillFlag (Zone zone, int column, int row)
     {
         GameObject obj = Instantiate (Resources.Load ("Prefabs/HillFlag")) as GameObject;
-        obj.renderer.sortingLayerName = FLAG_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = FLAG_RENDER_LAYER;
         obj.tag = HILL_FLAG;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();
@@ -158,7 +158,7 @@ public class Flag : MonoBehaviour
     public static void CreateRiverFlag (Zone zone, int column, int row)
     {
         GameObject obj = Instantiate (Resources.Load ("Prefabs/RiverFlag")) as GameObject;
-        obj.renderer.sortingLayerName = FLAG_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = FLAG_RENDER_LAYER;
         obj.tag = RIVER_FLAG;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();
@@ -169,7 +169,7 @@ public class Flag : MonoBehaviour
     public static void CreateRedFlag (Zone zone, int column, int row)
     {
         GameObject obj = Instantiate (Resources.Load ("Prefabs/RedFlag")) as GameObject;
-        obj.renderer.sortingLayerName = FLAG_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = FLAG_RENDER_LAYER;
         obj.tag = RED_FLAG;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();
@@ -180,7 +180,7 @@ public class Flag : MonoBehaviour
     public static void CreateBlueFlag (Zone zone, int column, int row)
     {
         GameObject obj = Instantiate (Resources.Load ("Prefabs/BlueFlag")) as GameObject;
-        obj.renderer.sortingLayerName = FLAG_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = FLAG_RENDER_LAYER;
         obj.tag = BLUE_FLAG;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();

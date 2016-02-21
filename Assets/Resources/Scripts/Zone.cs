@@ -66,7 +66,7 @@ public class Zone :MonoBehaviour
         for (int i = 0; i < tileObjs.Length; ++i) {
 
             // Add script component
-            Tile tile = tileObjs [i].AddComponent ("Tile") as Tile;
+            Tile tile = tileObjs [i].AddComponent <Tile>() as Tile;
 
             // Setup tile
             int row = i / columns;
@@ -94,7 +94,7 @@ public class Zone :MonoBehaviour
 
     float TileSize ()
     {
-        return tileObjs [0].renderer.bounds.size.x;
+        return tileObjs [0].GetComponent<Renderer>().bounds.size.x;
     }
 
     public Unit HoverUnit {

@@ -105,7 +105,7 @@ public class Whisperer : MonoBehaviour
             path = "Prefabs/BlueWhisperer";
         }
         GameObject obj = Instantiate (Resources.Load (path)) as GameObject;
-        obj.renderer.sortingLayerName = Unit.UNIT_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = Unit.UNIT_RENDER_LAYER;
         obj.tag = player.IsRed ? Unit.RED_WHISPERER : Unit.BLUE_WHISPERER;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();

@@ -70,11 +70,11 @@ public class Tile : MonoBehaviour
     {
         GameObject textObj = new GameObject ();        
         text = textObj.AddComponent<TextMesh> ();
-        text.renderer.sortingLayerName = CAPTION_RENDER_LAYER;
-        text.renderer.sortingOrder = 0;
+        text.GetComponent<Renderer>().sortingLayerName = CAPTION_RENDER_LAYER;
+        text.GetComponent<Renderer>().sortingOrder = 0;
         text.font = (Font)Resources.Load ("Fonts/DIN") as Font;
         text.fontStyle = FontStyle.Normal;
-        text.renderer.material = text.font.material;
+        text.GetComponent<Renderer>().material = text.font.material;
         text.fontSize = 60;
         text.anchor = TextAnchor.MiddleCenter;
         text.color = Color.black;

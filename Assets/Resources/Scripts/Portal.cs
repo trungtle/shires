@@ -24,7 +24,7 @@ public class Portal : MonoBehaviour
     {
         // Start
         GameObject obj1 = Instantiate (Resources.Load ("Prefabs/Portal")) as GameObject;
-        obj1.renderer.sortingLayerName = PORTAL_RENDER_LAYER;
+        obj1.GetComponent<Renderer>().sortingLayerName = PORTAL_RENDER_LAYER;
         obj1.tag = PORTAL;
         obj1.transform.SetParent (startZ.transform);
         Unit unit1 = obj1.GetComponent<Unit> ();
@@ -35,7 +35,7 @@ public class Portal : MonoBehaviour
         
         // End
         GameObject obj2 = Instantiate (Resources.Load ("Prefabs/Portal")) as GameObject;
-        obj2.renderer.sortingLayerName = PORTAL_RENDER_LAYER;
+        obj2.GetComponent<Renderer>().sortingLayerName = PORTAL_RENDER_LAYER;
         obj2.tag = PORTAL;
         obj2.transform.SetParent (endZ.transform);
         Unit unit2 = obj2.GetComponent<Unit> ();

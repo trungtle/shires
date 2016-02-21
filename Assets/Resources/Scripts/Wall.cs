@@ -98,7 +98,7 @@ public class Wall : MonoBehaviour
     public static Unit CreateWall (Zone zone, int column, int row)
     {
         GameObject wallObj = Instantiate (Resources.Load ("Prefabs/Wall")) as GameObject;
-        wallObj.renderer.sortingLayerName = WALL_RENDER_LAYER;
+        wallObj.GetComponent<Renderer>().sortingLayerName = WALL_RENDER_LAYER;
         wallObj.tag = WALL;
         wallObj.transform.SetParent (zone.transform);
         Unit wall = wallObj.GetComponent<Unit> ();

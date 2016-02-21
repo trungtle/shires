@@ -157,7 +157,7 @@ public class Lord : MonoBehaviour
             path = "Prefabs/BlueLord";
         }
         GameObject obj = Instantiate (Resources.Load (path)) as GameObject;
-        obj.renderer.sortingLayerName = Unit.UNIT_RENDER_LAYER;
+        obj.GetComponent<Renderer>().sortingLayerName = Unit.UNIT_RENDER_LAYER;
         obj.tag = player.IsRed ? Unit.RED_LORD : Unit.BLUE_LORD;
         obj.transform.SetParent (zone.transform);
         Unit unit = obj.GetComponent<Unit> ();

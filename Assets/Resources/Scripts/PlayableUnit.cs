@@ -177,20 +177,20 @@ public class PlayableUnit : MonoBehaviour
 
     public void OnCompleteMove ()
     {
-        audio.clip = moveClip;
-        audio.Play ();
+        GetComponent<AudioSource>().clip = moveClip;
+        GetComponent<AudioSource>().Play ();
     }
 
     public void OnTunneling ()
     {
-        audio.clip = tunnelClip;
-        audio.Play ();
+        GetComponent<AudioSource>().clip = tunnelClip;
+        GetComponent<AudioSource>().Play ();
     }
 
     public void OnCapturing ()
     {
-        audio.clip = captureClip;
-        audio.Play ();
+        GetComponent<AudioSource>().clip = captureClip;
+        GetComponent<AudioSource>().Play ();
     }
 
     public void OnRemovedFromGame (bool delayed = false)
