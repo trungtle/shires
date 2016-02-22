@@ -4,6 +4,14 @@
 
 ![Shires screen shot](https://s3-us-west-2.amazonaws.com/trle/shires/shires_screenshot.png)
 
+## Download
+
+The game can be downloaded [here](http://www.trungtuanle.com/files/shires.zip). The game currently only supported OSX and Windows.
+
+## Link
+
+[Website](http://www.trungtuanle.com/game/shires)
+
 ## Rules
 
 ### Board
@@ -36,10 +44,6 @@ The objective of the game is to capture the opponent's shire. The game is over o
 ## Development
 
 *Shires* was created in [Unity3D](https://unity3d.com/) using C#.
-
-## Download
-
-The game can be downloaded [here](http://www.trungtuanle.com/files/shires.zip). The game currently only supported OSX and Windows.
 
 ## Credit
 
